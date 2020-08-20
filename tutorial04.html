@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>D3</title>
+
+		<script src="https://d3js.org/d3.v5.min.js"></script>
+	</head>
+	<body>
+		<h1 id="header">Hello D3</h1>
+
+		<div class="container"></div>
+
+		<input
+			type="range"
+			name="gap"
+			id="slider"
+			min="1"
+			value="50"
+			max="100"
+			id=""
+		/><span id="output"></span>
+
+		<script>
+			let slider = document.getElementById("slider");
+			let sliderValue = 50;
+			let outputElement = document.getElementById("output");
+
+			outputElement.innerHTML = slider.value;
+
+			function refresh() {
+
+				slider.oninput = function () {
+					sliderValue = this.value;
+					outputElement.innerHTML = sliderValue;
+				};
+			}
+
+			let canvasWidth = 1100;
+			let canvasHeight = 600;
+
+			const dataArray = [
+				126,
+				249,
+				301,
+				420,
+				391,
+				489,
+				500,
+				140,
+				92,
+				180,
+				154,
+				120,
+			];
+
+			const canvas = d3
+				.select(".container")
+				.append("svg")
+				.attr("width", canvasWidth)
+				.attr("height", canvasHeight)
+				.style("background-color", "lightblue");
+
+			const bars = canvas
+				.selectAll("rect")
+				.data(dataArray)
+				.enter() // returns placeholders for each data element
+				.append("rect")
+				.attr("transform", `translate(${50}, 0)`)
+				.attr("width", 20) // pegando o value de cada elemento
+				.attr("height", (data) => data)
+				.attr("y", (data) => canvasHeight - data)
+				.attr("x", (data, index) => index * sliderValue)
+				.attr("fill", "dodgerblue");
+
+
+			setInterval(() => {
+				refresh();
+
+				bars.attr("x", (data, index) => index * sliderValue)
+
+			}, 100)	
+		</script>
+	</body>
+</html>
