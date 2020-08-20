@@ -6,12 +6,19 @@
 		<title>D3</title>
 
 		<script src="https://d3js.org/d3.v5.min.js"></script>
+		<style>
+			label {
+				margin: 0 0 0 30px;
+			}
+		</style>
 	</head>
 	<body>
 		<h1 id="header">Hello D3</h1>
 
 		<div class="container"></div>
 
+		<label for="gap">Gap: </label>
+		<span id="output"></span>
 		<input
 			type="range"
 			name="gap"
@@ -19,26 +26,66 @@
 			min="1"
 			value="50"
 			max="100"
-			id=""
-		/><span id="output"></span>
+		/>
+
+		<label for="bar-height">Bar Height: </label>
+		<span id="output2"></span>
+		<input
+			type="range"
+			name="bar-height"
+			id="slider2"
+			min="0"
+			value="100"
+			max="200"
+		/>
+
+		<label for="bar-width">Bar Width: </label>
+		<span id="output3"></span>
+		<input
+		type="range"
+		name="bar-width"
+		id="slider3"
+		min="1"
+		value="20"
+		max="50"
+	/>
 
 		<script>
 			let slider = document.getElementById("slider");
 			let sliderValue = 50;
 			let outputElement = document.getElementById("output");
 
+			let slider2 = document.getElementById("slider2");
+			let sliderValue2 = 100;
+			let outputElement2 = document.getElementById("output2");
+
+			let slider3 = document.getElementById("slider3");
+			let sliderValue3 = 20;
+			let outputElement3 = document.getElementById("output3");
+
 			outputElement.innerHTML = slider.value;
+			outputElement2.innerHTML = slider2.value;
+			outputElement3.innerHTML = slider3.value;
 
 			function refresh() {
-
 				slider.oninput = function () {
 					sliderValue = this.value;
 					outputElement.innerHTML = sliderValue;
 				};
+
+				slider2.oninput = function () {
+					sliderValue2 = this.value;
+					outputElement2.innerHTML = sliderValue2;
+				};
+
+				slider3.oninput = function () {
+					sliderValue3 = this.value;
+					outputElement3.innerHTML = sliderValue3;
+				};
 			}
 
 			let canvasWidth = 1100;
-			let canvasHeight = 600;
+			let canvasHeight = 700;
 
 			const dataArray = [
 				126,
@@ -68,19 +115,22 @@
 				.enter() // returns placeholders for each data element
 				.append("rect")
 				.attr("transform", `translate(${50}, 0)`)
-				.attr("width", 20) // pegando o value de cada elemento
+				.attr("width", 10) // pegando o value de cada elemento
 				.attr("height", (data) => data)
 				.attr("y", (data) => canvasHeight - data)
 				.attr("x", (data, index) => index * sliderValue)
 				.attr("fill", "dodgerblue");
 
-
 			setInterval(() => {
 				refresh();
 
-				bars.attr("x", (data, index) => index * sliderValue)
+				bars
+				.attr("x", (data, index) => index * sliderValue)
+				.attr("height", (data) => data + sliderValue2)
+				.attr("y", (data) => canvasHeight - data - sliderValue2)
+				.attr("width", (data) => sliderValue3)
 
-			}, 100)	
+			}, 100);
 		</script>
 	</body>
 </html>
