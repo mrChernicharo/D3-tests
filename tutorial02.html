@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3</title>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <h1 id="header">Hello D3</h1>
+
+    <div class="container"></div>
+
+    <script>
+      let canvasWidth = 700;
+      let canvasHeight = 600;
+
+      const canvas = d3
+        .select(".container")
+        .append("svg")
+        .attr("width", canvasWidth)
+        .attr("height", canvasHeight)
+        .style("background-color", "coral");
+
+      const circle = canvas
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", 50)
+        .attr("fill", "#32af02");
+
+			const rectangle = canvas
+				.append('rect')
+        .attr("width", 120)
+				.attr('height', 40)
+				.attr('x', 300)
+				.attr('y', 220)
+				.attr('fill', '#9a0314');
+
+			const line = canvas
+				.append('line')
+				.attr('x1', 200).attr('y1', canvasHeight)	
+				.attr('x2', 700).attr('y2', canvasHeight - 200)	
+				.attr('stroke', '#219ae8')
+				.attr('stroke-width', 2)
+
+      let count = 0;
+      setInterval(() => {
+        count += 10;
+        circle.attr("transform", `translate(${count}, ${count})`);
+				rectangle.attr('x', count);
+				line.attr('y2', count);
+
+				console.log(count);
+      }, 200);
+
+      console.log(d3);
+    </script>
+  </body>
+</html>
