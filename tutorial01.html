@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>D3</title>
+
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+
+</head>
+<body>
+	<h1 id="header">Hello D3</h1>
+
+	<div class="container"></div>
+
+	<script>
+		d3.select('.container').text('write some text')
+		.append('p').text('a paragraph')
+		.append('p').text('another paragraph').style('color', '#23af02')
+		.append('p').text('yet another paragraph').style('color', '#23af02').style('font-size', '30px');
+
+
+		d3.select('#header')
+		.style('color', 'red').style('background-color', 'coral').style('width', '200px').style('text-align', 'center')
+
+		console.log(d3);
+	</script>
+
+</body>
+</html>
