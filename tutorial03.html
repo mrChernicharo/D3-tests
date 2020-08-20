@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3</title>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <h1 id="header">Hello D3</h1>
+
+    <div class="container"></div>
+
+    <script>
+      let canvasWidth = 1100;
+      let canvasHeight = 600;
+
+			const dataArray = [126, 249, 301, 420, 691, 589, 500, 140, 92, 180, 154, 120]
+
+      const canvas = d3
+        .select(".container")
+        .append("svg")
+        .attr("width", canvasWidth)
+        .attr("height", canvasHeight)
+        .style("background-color", "lightblue");
+
+			const bars = canvas.selectAll('rect')
+				.data(dataArray)
+				.enter()  // returns placeholders for each data element
+					.append('rect')
+					.attr('transform', `translate(0, ${50})`)
+					.attr('width', (data) => data)   // pegando o value de cada elemento
+        	.attr('height', 20)
+					.attr('y', (data, index) => index * 40)
+					.attr('fill', 'dodgerblue')
+    </script>
+  </body>
+</html>
