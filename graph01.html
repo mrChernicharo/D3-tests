@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3 Tests</title>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+    <h2>D3 graph 01</h2>
+
+    <div class="container" id="container"></div>
+
+    <button onclick="play()">START / STOP</button>
+
+    <script>
+      let stopInterval = true;
+
+      let canvas = d3
+        .select(".container")
+        .append("svg")
+        .attr("width", 100000)
+        .attr("height", 500)
+        .style("border", "1px solid #000");
+
+      let count = 0;
+      let data = [];
+
+      function play() {
+        stopInterval = !stopInterval;
+
+        let interval = setInterval(() => {
+          for (let i = 0; i < 1; i++) {
+
+            data.push({ x: ++count * 20, y: Math.random() * 300 });
+        // data = [{x: 10, y: 400}, {x: 20, y: 350}, {x: 30, y: 350} ...]
+          }
+
+
+          data.shift();
+          console.log(data);
+          data.push({ x: ++count * 20, y: Math.random() * 300 });
+
+          // começa a deslocar o canvas
+          if (count > 20) {
+            canvas.attr("transform", `translate(${-count * 10}, 0)`);
+          }
+
+          let group = canvas
+            .append("g")
+            .attr("transform", "translate(-100, 100)");
+
+          let line = d3.svg
+            .line()
+            .x((d) => {
+              return d.x;
+            })
+            .y((d) => {
+              return d.y;
+            });
+
+          group
+            .selectAll("path")
+            .data([data])
+            .enter()
+            .append("path")
+            .attr("d", line)
+            .attr("stroke", "dodgerblue")
+            .attr("stroke-width", 2)
+            .attr("fill", "none");
+
+          if (stopInterval) {
+            clearInterval(interval);
+          }
+        }, 400);
+      }
+    </script>
+  </body>
+</html>
