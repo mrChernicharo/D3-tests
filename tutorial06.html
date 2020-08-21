@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3</title>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+    <h1 id="header">Hello D3</h1>
+
+    <div class="container"></div>
+
+    <script>
+      let width = 1000;
+      let height = 800;
+
+			// data
+			const dataArray = [90, 50, 190, 170, 290, 320, 500, 600, 700, 270, 310, 400, 180, 20, 480, 90]
+			
+
+			// scales
+			const widthScale = d3.scale.linear()
+				.domain([0, 1000])  // min max
+				.range([0, 800])	// início fim do eixo em pxs ...algo assim
+
+			const colorScale = d3.scale.linear()
+				.domain([0, 800])
+				.range(['dodgerblue', 'red'])	
+
+			// axis	
+			const axis = d3.svg.axis()
+				.scale(widthScale)
+				.ticks(10) // quantas marcações temos no eixo
+
+			// canvas
+      const canvas = d3.select(".container")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("background-color", "lightblue")
+				.append("g")
+				.attr('transform', 'translate(60, 0)')
+
+
+
+			// bars
+			const bars = canvas.selectAll('rect')
+				.data(dataArray)
+				.enter()  
+					.append('rect')
+					.attr('width', (data) => widthScale(data))   
+        	.attr('height', 20)
+					.attr('y', (data, index) => index * 40)
+					.attr('fill', (data) => colorScale(data ))
+					.attr('transform', 'translate(0, 50)')
+
+			canvas.append("g")
+				.attr('transform', 'translate(0, 700)')
+				.call(axis)
+
+
+    </script>
+  </body>
+</html>
