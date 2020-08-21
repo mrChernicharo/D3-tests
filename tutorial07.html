@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3</title>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+    <h1 id="header">Hello D3</h1>
+
+    <div class="container"></div>
+
+    <script>
+			/*
+			
+			Data Elements > DOM Elements (enter)
+			Data Elements < DOM Elements (exit)
+			Data Elements = DOM Elements (update)
+			
+			*/
+
+			// data
+
+			const newData = [10]
+
+			let canvas = d3.select('.container')	
+				.append('svg')
+				.attr('width', 500)
+				.attr('height', 400)
+				.style('background-color', 'lightblue')
+
+			let circle1 = canvas.append('circle')
+				.attr('cx', 50)
+				.attr('cy', 100)
+				.attr('r', 25)
+
+
+
+			let circle2 = canvas.append('circle')
+				.attr('cx', 50)
+				.attr('cy', 200)
+				.attr('r', 25)
+
+				let circle3 = canvas.append('circle')
+				.attr('cx', 50)
+				.attr('cy', 300)
+				.attr('r', 25)
+
+	
+
+
+			let circles = canvas.selectAll('circle')
+				.data(newData)		
+				.attr('fill', 'blue')
+				.exit()
+					.attr('fill', 'green')
+
+
+    </script>
+  </body>
+</html>
