@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>D3</title>
+
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+	</head>
+	<body>
+		<h1 id="header">Hello D3</h1>
+		<p>
+			enter / exit (e update) têm a ver com o funcionamento do selectAll() se:
+		</p>
+
+		<ol>
+			<li>
+				.há mais dados que elementos na dom
+			</li>
+			<li>
+				.há mais elementos na dom do que dados
+			</li>
+
+			<li>
+				. ou se a quantidade é igual
+			</li>
+		</ol>
+
+		<button onclick="addData()">Acrescentar Dado</button>
+		<button onclick="removeData()">Remover Dado</button>
+		<div class="container"></div>
+
+		<script>
+			/*
+
+			enter / exit (e update) têm a ver com o funcionamento do selectAll() se:
+				.há mais dados que elementos na dom
+				.há mais elementos na dom do que dados
+				. ou se a quantidade é igual
+			
+			Data Elements > DOM Elements (enter)
+			Data Elements < DOM Elements (exit)
+			Data Elements = DOM Elements (update)
+			
+			*/
+
+			function addData() {
+				newData.push(10)
+				console.log(newData)
+			}
+			function removeData() {
+				newData.shift(10)
+				console.log(newData)
+
+			}
+
+			const newData = [10, 'hey', true, null];
+
+			let canvas = d3
+				.select(".container")
+				.append("svg")
+				.attr("width", 500)
+				.attr("height", 400)
+				.style("background-color", "lightblue");
+
+			let circle1 = canvas
+				.append("circle")
+				.attr("cx", 50)
+				.attr("cy", 100)
+				.attr("r", 25);
+
+			let circle2 = canvas
+				.append("circle")
+				.attr("cx", 50)
+				.attr("cy", 200)
+				.attr("r", 25);
+
+			let circle3 = canvas
+				.append("circle")
+				.attr("cx", 50)
+				.attr("cy", 300)
+				.attr("r", 25);
+
+			let circle4 = canvas
+				.append("circle")
+				.attr("cx", 200)
+				.attr("cy", 200)
+				.attr("r", 25);
+
+			let circle5 = canvas
+				.append("circle")
+				.attr("cx", 200)
+				.attr("cy", 340)
+				.attr("r", 25);
+
+			let circle6 = canvas
+				.append("circle")
+				.attr("cx", 300)
+				.attr("cy", 120)
+				.attr("r", 25);
+
+			let circle7 = canvas
+				.append("circle")
+				.attr("cx", 320)
+				.attr("cy", 200)
+				.attr("r", 25);
+
+			setInterval(() => {
+
+			let circles = canvas.selectAll("circle")
+				.data(newData)
+				.attr("fill", "blue") // colore 1 círculo pra cada 1 dado
+				.exit() // acessa os circulos que não têm um dado correspondente
+					.attr("fill", "green");
+
+			}, 200)	
+
+		</script>
+	</body>
+</html>
