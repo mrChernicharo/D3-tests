@@ -11,13 +11,13 @@
 
 			// 1. 
 			const canvas = d3.select('body').append('svg')
-				.attr('width', 1000)
-				.attr('height', 700)
+				.attr('width', 900)
+				.attr('height', 900)
 				.append('g') 
 			
 			// 2. layout.tree
 			const tree = d3.layout.tree()
-				.size([800, 500])
+				.size([600, 600])
 
 			// 3. recuperar dados
 			const data = d3.json('family_data.json', function(data) {
@@ -33,11 +33,11 @@
 					.enter()
 						.append('g')
 						.attr('class', 'node')
-						.attr('transform', function (d) { return `translate(${d.x}, ${d.y + 20})`})
+						.attr('transform', function (d) { return `translate(${d.x}, ${d.y})`})
 
 				// 5. acrescentar um circulo e texto pra cada node
 				node.append('circle')
-					.attr('transform','translate(100, 80)')
+					.attr('transform','translate(100, 100)')
 					.attr('r', 15)
 					.attr('fill', '#df1951');
 
@@ -47,6 +47,7 @@
 
 				// 7. diagonais desenhadas automaticamente!!!
 				const diagonal = d3.svg.diagonal()
+					.projection(function (d) { return [d.x, d.y]})
 
 
 				// 6. pegamos os dados de links para criar paths 
