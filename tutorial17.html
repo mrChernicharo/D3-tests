@@ -13,17 +13,32 @@
 			const canvas = d3.select('body').append('svg')
 				.attr('width', 1000)
 				.attr('height', 700)
-				.append('d') 
+				.attr('transform','translate(100, 100)')
+				.append('g') 
 			
 			// 2. layout.tree
 			const tree = d3.layout.tree()
 				.size([800, 500])
 
 			// 3. recuperar dados
-			const data = d3.json('familyData.json', function(data) {
-				const nodes = tree.nodes(data);
+			const data = d3.json('family_data.json', function(data) {
+				const nodes = tree.nodes(data); 
+				const links = tree.links(nodes);
 
-				console.log(nodes)
+				console.log(nodes) // cada node contém dado + parents, children e depth!
+				console.log(links) // cada link contém dado + source, target e esses têm x e y automaticos
+
+				const node = canvas.selectAll('.node')
+					.data(nodes)
+					.enter()
+						.append('g')
+						.attr('class', 'node')
+						.attr('transform', function (d) { return `translate(${d.x}, ${d.y + 20})`})
+
+
+				node.append('circle')
+					.attr('r', 15)
+					.attr('fill', '#df1951')	
 			});
 			// const diagonal = d3.svg.diagonal()
 			// 	.source({x: 10 , y: 500}) // início da diagonal
