@@ -27,28 +27,13 @@
 				.attr("r", 25);
 
 
-			setInterval (() => {
 
 			circle.transition()
-				.duration(1000)
-				.delay(600)
-				.attr("cx", 600)	 
-				.transition()
-					.attr("cx", 100)	
-					.attr("cy", 100)	
-					.transition()
-						.attr("cy", 300)	
-						.transition()
-							.attr("cx", 600)	
-							.transition()
-								.attr("cx", 100)
-								.attr("cy", 200)
-
-			}, 6000)
-
-
-
-
+				.duration(2000)
+				.attr("cx", 600)
+				.each('end', function () {
+					d3.select(this).attr('fill', 'red')
+				})
 
 		</script>
 	</body>
