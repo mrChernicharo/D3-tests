@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+	</head>
+	<body>
+
+	<script>
+			const data = [
+				{x: 10, y: 600},
+				{x: 20, y: 200},
+				{x: 100, y: 180},
+				{x: 120, y: 250},
+				{x: 200, y: 300},
+				{x: 300, y: 400},
+				{x: 400, y: 100},
+				{x: 480, y: 70},
+			]
+
+			// definindo o canvas
+			const canvas = d3.select('body').append('svg')
+				.attr('width', 600)
+				.attr('height', 500)
+
+			// criando um grupo
+			const group = canvas.append('g')
+				.attr('transform', 'translate(10, 10)')
+
+			// nosso path generator
+			const line = d3.svg.line()
+				.x(function (d) { return d.x })
+				.y(function (d) { return d.y })
+
+			group.selectAll('path')
+				.data([data])
+				.enter()
+					.append('path')
+					.attr('d', line)
+					.attr('fill', 'none')
+					.attr('stroke', '#000')
+					.attr('stroke-width', 10)
+
+
+
+
+
+		// function capitalize(string) {
+		// 	return string.charAt(0).toUpperCase() + string.slice(1);
+		// }
+	</script>
+	</body>
+</html>
