@@ -8,41 +8,42 @@
 	</head>
 	<body>
 		<h1>Some Array functions provided by d3</h1>
+		<div style="border: 1px solid dodgerblue; font-size: 20px; text-align: center;">const data = [10, 20, 30, 40, 50, 60];</div>
 		<div>
-			<h3 style="font-family: arial ;font-size: 20px; color: #333">
+			<h3 style="font-family: arial ;font-size: 20px; color: dodgerblue">
 			<br />
 			d3.min(data)
 			<br />
 			// 10
-			<br />
+			<hr />
 			d3.max(data)
 			<br />
 			// 60 
-			<br />
+			<hr />
 			data.sort(d3.descending)
 			<br />
 			// (6) [60, 50, 40, 30, 20, 10]
-			<br />
+			<hr />
 			d3.extent(data)
 			<br />
 			// (2) [10, 60]
-			<br />
+			<hr />
 			d3.sum(data)
 			<br />
 			// 210
-			<br />
+			<hr />
 			d3.mean(data)
 			<br />
 			// 35
-			<br />
+			<hr />
 			d3.shuffle(data)
 			<br />
 			// (6) [20, 10, 50, 40, 60, 30]
-			<br />
+			<hr />
 			d3.shuffle(data)
 			<br />
 			// (6) [30, 20, 40, 60, 50, 10] 
-			<br />
+			<hr />
 			data.sort(d3.ascending)
 			<br />
 			// (6) [10, 20, 30, 40, 50, 60]
