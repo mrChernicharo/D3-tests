@@ -1,0 +1,32 @@
+{
+	"name": "Euridice",
+	"children": [
+		{
+			"name": "Leo",
+			"children": [
+				{
+					"name": "Lorenzo"
+				}
+			]
+		},
+		{
+			"name": "Marcia"
+		},
+		{
+			"name": "Edna",
+			"children": [
+				{
+					"name": "Vinícius"
+				},
+				{
+					"name": "Felipe",
+					"children": [
+						{
+							"name": "Soleil"
+						}
+					]
+				}
+			]
+		}
+	]
+}

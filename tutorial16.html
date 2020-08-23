@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+	</head>
+	<body>
+
+		<script>
+			// recuperar dados
+
+			const data = d3.json('familyData.json');
+
+			const canvas = d3.select('body').append('svg')
+				.attr('width', 1000)
+				.attr('height', 700)
+
+			const diagonal = d3.svg.diagonal()
+				.source({x: 10 , y: 500}) // início da diagonal
+				.target({x: 900, y: 10 }) // final
+
+
+			canvas.append('path')	
+				.attr('fill', 'none')
+				.attr('stroke', 'black')
+				.attr('d', diagonal)  //  d= string prop com as coordenadas do path do <svg> 
+
+
+
+
+			// function capitalize(string) {
+			// 	return string.charAt(0).toUpperCase() + string.slice(1);
+			// }
+		</script>
+	</body>
+</html>
