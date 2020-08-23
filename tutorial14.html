@@ -8,43 +8,50 @@
 	</head>
 	<body>
 
-		<script>
-			// recuperar dados
+	<script>
+			// const data = [
+			// 	{x: 10, y: 600},
+			// 	{x: 20, y: 200},
+			// 	{x: 100, y: 180},
+			// 	{x: 120, y: 250},
+			// 	{x: 200, y: 300},
+			// 	{x: 300, y: 400},
+			// 	{x: 400, y: 100},
+			// 	{x: 480, y: 70},
+			// ]
 
-			d3.csv('data.csv', (data) => {
-			// d3.csv('data.json', (data) => {
+			// definindo o canvas
+			const canvas = d3.select('body').append('svg')
+				.attr('width', 600)
+				.attr('height', 500)
 
-				// definindo o canvas
-				const canvas = d3.select('body').append('svg')
-					.attr('width', 600)
-					.attr('height', 500)
+			// criando um grupo
+			const group = canvas.append('g')
+				.attr('transform', 'translate(100, 100)')
+			
+			// raio
+			const r = 100;
 
-				// definindo dados e qual elemento vamos criar baseado neles ('rect')
-				canvas.selectAll('rect')
-					.data(data)
-					.enter()
-						.append('rect')
-						.attr('width', function(d) { return d.age * 10})
-						.attr('height', 50)
-						.attr('y', function(d, i) { return i * 54})
-						.attr('fill', 'green');
+			const _360deg = Math.PI * 2          // 2.6 radianos
+			
+			// nosso path generator de arcos
+			const arc = d3.svg.arc()
+				.innerRadius(r - 20)
+				.outerRadius(r)
+				.startAngle(0)   // angles mesured in randians 
+				.endAngle(_360deg -  1)
 
-				// agora vamos criar texto
-				canvas.selectAll('text')		
-					.data(data)
-					.enter()
-						.append('text')
-						.attr('fill', '#fff')
-						.attr('y', function(d, i) { return i * 54 + 40})
-						.attr('x', 10)
-						.text(function(d) { return capitalize(d.name)})
-			})
+
+			group.append('path')
+				.attr('d', arc)
 
 
 
-			function capitalize(string) {
-				return string.charAt(0).toUpperCase() + string.slice(1);
-			}
-		</script>
+
+
+		// function capitalize(string) {
+		// 	return string.charAt(0).toUpperCase() + string.slice(1);
+		// }
+	</script>
 	</body>
 </html>
