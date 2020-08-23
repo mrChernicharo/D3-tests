@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+	</head>
+	<body>
+
+	<script>
+			let count = 0;
+			const data = [40, 80, 60]
+
+			// definindo o canvas
+			const canvas = d3.select('body').append('svg')
+				.attr('width', 1000)
+				.attr('height', 1000)
+
+			const r = 140;
+			const color = d3.scale.ordinal()
+				.range(['red', 'orange', 'olive'])
+
+			// criando um grupo
+			const group = canvas.append('g')
+				.attr('transform', 'translate(500, 400)')
+			
+			
+			// path generator de arcos, innerRadius(0) == pieChart
+			const arc = d3.svg.arc()
+				.innerRadius(r * 1.4)
+				.outerRadius(r * 2)
+
+			// layout retorna um objeto pra cada dado. Além do value, 
+			// automaticamente o startAngle e o endAngle são calculados
+			const pie = d3.layout.pie()
+				.value(function (d) { return d })
+
+			// atribui classes aos arcos
+			const arcs = group.selectAll('.arc')
+				.data(pie(data))
+				.enter()
+					.append('g')
+					.attr('class', 'arc')	
+
+			// 
+			arcs.append('path')
+				.attr('d', arc)
+				.attr('fill', function(d) { return color(d.data)})
+
+			// adicionando texto
+			arcs.append('text')
+				.attr('transform', function (d) { return `translate(${arc.centroid(d)})` })
+				.attr('text-anchor', 'middle')
+				.attr('fill', '#fff')
+				.attr('font-size', 30)
+				.text(function (d) { return d.data})
+
+			// setInterval(() => { 
+			// 	arcs.attr('transform', `rotate(${count})`)
+			// 	count-- 
+			// 	}, 20)		
+				
+	</script>
+	</body>
+</html>
