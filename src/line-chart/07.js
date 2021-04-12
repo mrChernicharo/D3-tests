@@ -53,6 +53,7 @@ function drawChart() {
 	const yAxis = createYAxis();
 	appendAxis();
 	createDots();
+	createLine();
 
 	// cx: (d) => d[0], cy: (d) => d[1], r: 6, fill: 'red'
 
@@ -111,4 +112,21 @@ function drawChart() {
 			.attr("fill", "transparent")
 			.attr("stroke", "red");
 	}
+
+	function createLine() {
+		let lineGenerator = d3.line();
+		lineGenerator.x((d, i) => myTimeScale(datesArr[i]));
+		lineGenerator.y((d) => myValuesScale(d.value) + margin.top);
+		lineGenerator.curve(d3.curveCardinal.tension(0.8));
+
+		svgCanvas
+			.append("path")
+			.attr("d", lineGenerator(data))
+			.attr("fill", "none")
+			.attr("stroke", "purple")
+			.attr("stroke-width", 2);
+	}
 }
+// stroke: 'black',
+// 'stroke-width': 2,
+// fill: 'none',
