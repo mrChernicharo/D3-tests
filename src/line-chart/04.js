@@ -30,9 +30,8 @@ const tickWidth = 60;
 
 let dateFormat = d3.timeFormat("%d/%m");
 
-const axis = createXAxis();
-
-svgCanvas.append("g").call(axis);
+const xAxis = createXAxis();
+appendXAxis();
 
 function createSvgCanvas() {
 	return d3
@@ -42,10 +41,15 @@ function createSvgCanvas() {
 		.attr("height", height)
 		.style("border", "1px solid");
 }
-
 function createXAxis() {
 	return d3
 		.axisBottom(myTimeScale)
 		.ticks(width / tickWidth)
 		.tickFormat(dateFormat);
+}
+function appendXAxis() {
+	svgCanvas
+		.append("g")
+		.call(xAxis)
+		.attr("transform", `translate(0, ${height - 50})`);
 }
