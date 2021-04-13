@@ -52,8 +52,8 @@ function drawChart() {
 	const xAxis = createXAxis();
 	const yAxis = createYAxis();
 	appendAxis();
-	createDots();
-	createLine();
+	const dots = createDots();
+	const line = createLine();
 
 	// cx: (d) => d[0], cy: (d) => d[1], r: 6, fill: 'red'
 
@@ -65,6 +65,7 @@ function drawChart() {
 			.attr("height", height)
 			.style("border", "1px solid");
 	}
+
 	function createXAxis() {
 		let dateFormat = d3.timeFormat("%d/%m");
 
@@ -97,8 +98,9 @@ function drawChart() {
 
 		svgCanvas.selectAll(".y-axis .tick line").attr("opacity", 0.3);
 	}
+
 	function createDots() {
-		svgCanvas
+		return svgCanvas
 			.append("g")
 			.attr("class", "dots")
 			.selectAll("circle")
@@ -107,7 +109,7 @@ function drawChart() {
 			.append("circle")
 			.attr("class", (d, i) => `circle-${i}`)
 			.attr("cx", (d, i) => myTimeScale(datesArr[i]))
-			.attr("cy", (d, i) => myValuesScale(d.value) + margin.top)
+			.attr("cy", (d, i) => myValuesScale(d.value))
 			.attr("r", 4)
 			.attr("fill", "transparent")
 			.attr("stroke", "red");
@@ -116,16 +118,22 @@ function drawChart() {
 	function createLine() {
 		let lineGenerator = d3.line();
 		lineGenerator.x((d, i) => myTimeScale(datesArr[i]));
-		lineGenerator.y((d) => myValuesScale(d.value) + margin.top);
+		lineGenerator.y((d) => myValuesScale(d.value));
 		lineGenerator.curve(d3.curveCardinal.tension(0.8));
 
-		svgCanvas
+		return svgCanvas
+			.append("g")
+			.attr("class", "line")
 			.append("path")
 			.attr("d", lineGenerator(data))
 			.attr("fill", "none")
-			.attr("stroke", "purple")
+			.attr("stroke", "lightblue")
 			.attr("stroke-width", 2);
 	}
+
+	dots.on("mouseover", (d) => {
+		console.log(d);
+	});
 }
 // stroke: 'black',
 // 'stroke-width': 2,
