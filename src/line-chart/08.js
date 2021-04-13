@@ -26,9 +26,9 @@ function updateChart() {
 }
 
 function drawChart() {
-	const width = window.innerWidth - 100;
-	const height = window.innerHeight - 200;
 	const margin = { top: 50, right: 60, bottom: 50, left: 70 };
+	const width = window.innerWidth > 400 ? window.innerWidth - 100 : 300;
+	const height = window.innerHeight > 450 ? window.innerHeight - 200 : 250;
 
 	const datesArr = data.map((item) => new Date(item.timestamp * 1000));
 	const valuesArr = data.map((item) => item.value);
