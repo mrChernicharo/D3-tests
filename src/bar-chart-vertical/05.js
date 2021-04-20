@@ -66,7 +66,7 @@ const bars = svgCanvas
 	.data(dataset)
 	.enter()
 	.append("rect")
-	.attr("class", "bar")
+	.attr("class", (d, i) => `bar-${i}`)
 	.attr("x", margin.left)
 	.attr("y", (d, i) => i * barBoundingHeight + margin.top)
 	.attr("height", barHeight)
@@ -170,9 +170,11 @@ const showTooltip = (d) => {
 };
 
 bars
-	.on("mousemove", (d) => {
+	.on("mousemove", (d, i) => {
 		showTooltip(d);
+		d3.select(`.bar-${i}`).attr("opacity", 0.5);
 	})
-	.on("mouseout", (d) => {
+	.on("mouseout", (d, i) => {
 		hideTooltip();
+		d3.select(`.bar-${i}`).attr("opacity", 1);
 	});
