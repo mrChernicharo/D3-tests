@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+	body {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		margin: auto;
+		position: relative;
+		width: 960px;
+	}
+
+	text {
+		font: 10px sans-serif;
+	}
+
+	form {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
+</style>
+<body>
+	<form>
+		<h1>Pie Chart</h1>
+		<label><input type="radio" name="dataset" value="apples" checked /> Apples</label>
+		<label><input type="radio" name="dataset" value="oranges" /> Oranges</label>
+		<label><input type="radio" name="dataset" value="melons" /> Melons</label>
+	</form>
+
+	<script src="//d3js.org/d3.v3.min.js"></script>
+	<script>
+		const width = 960,
+			height = 500,
+			radius = Math.min(width, height) / 2;
+
+		const color = d3.scale.category20();
+
+		const pie = d3.layout
+			.pie()
+			.value((d) => d.apples)
+			.sort(null);
+
+		const arc = d3.svg
+			.arc()
+			.innerRadius(radius - 100)
+			.outerRadius(radius - 20);
+
+		const svg = d3
+			.select("body")
+			.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.append("g")
+			.attr("transform", `translate(${width / 2},${height / 2})`);
+
+		d3.tsv("data.tsv", type, (error, data) => {
+			if (error) throw error;
+
+			let path = svg
+				.datum(data)
+				.selectAll("path")
+				.data(pie)
+				.enter()
+				.append("path")
+				.attr("fill", (d, i) => color(i))
+				.attr("d", arc)
+				.each(function (d) {
+					this._current = d;
+				}); // store the initial angles // doesn't work with arrow function
+
+			d3.selectAll("input").on("change", change);
+
+			function change() {
+				const value = this.value;
+				pie.value((d) => d[value]); // change the value function
+				path = path.data(pie); // compute the new angles
+				path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+			}
+		});
+
+		function type(d) {
+			d.apples = Number(d.apples);
+			d.oranges = Number(d.oranges);
+			d.melons = Number(d.melons);
+			return d;
+		}
+
+		// Store the displayed angles in _current.
+		// Then, interpolate from _current to the new angles.
+		// During the transition, _current is updated in-place by d3.interpolate.
+		function arcTween(a) {
+			let i = d3.interpolate(this._current, a);
+			this._current = i(0);
+
+			return (t) => {
+				return arc(i(t));
+			};
+		}
+	</script>
+</body>

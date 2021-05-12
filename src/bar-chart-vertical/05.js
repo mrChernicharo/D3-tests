@@ -66,12 +66,15 @@ const bars = svgCanvas
 	.data(dataset)
 	.enter()
 	.append("rect")
+	// .style('transition', '0.2s')
 	.attr("class", (d, i) => `bar-${i}`)
 	.attr("x", margin.left)
 	.attr("y", (d, i) => i * barBoundingHeight + margin.top)
 	.attr("height", barHeight)
 	.attr("width", (d) => xScale(d.value + 1))
-	.attr("fill", "blue");
+	.attr("fill", "blue")
+
+
 
 const descriptions = svgCanvas
 	.append("g")
@@ -95,20 +98,19 @@ const descriptions = svgCanvas
 const values = svgCanvas
 	.append("g")
 	.attr("class", "values")
-	.selectAll("value")
-	.attr("class", "label value")
+	.selectAll("label value")
 	.data(dataset)
 	.enter()
 	.append("text")
+	.attr("class", (d,i) => `label value-${i}`)
 	.attr("x", (d) => xScale(d.value + 1) + 170)
 	.attr("y", (d, i) => i * barBoundingHeight + margin.top + 14)
-	.text((d) => Math.round(d.value)) // use currencyPipe
-	.attr("fill", "#707070")
+	.text((d) => 'R$ '+ Math.round(d.value)) // use currencyPipe
 	.style("pointer-events", "none")
 	.style("font-family", "Oswald")
 	.style("font-size", 12)
 	.style("font-weight", "400")
-	.attr("fill", "blue");
+	.attr("fill", "black")
 
 const tooltip = d3
 	.select("#container")
@@ -133,8 +135,8 @@ const showTooltip = (d) => {
 	tooltip
 		.transition()
 		.duration(200)
-		.style("opacity", 0.9)
-		// .style('left', d3.event.offsetX - 40 + 'px')
+		.style("opacity", 1)
+
 		.style("left", () =>
 			d3.event.offsetX < width / 2 // mouse antes do meio do card ?
 				? `${d3.event.offsetX + 40}px`
@@ -169,12 +171,13 @@ const showTooltip = (d) => {
 	);
 };
 
-bars
+bars.on('mouseenter', (d,i) => {
+		d3.select(`.bar-${i}`).attr("opacity", (d) => 0.7)
+})
 	.on("mousemove", (d, i) => {
 		showTooltip(d);
-		d3.select(`.bar-${i}`).attr("opacity", 0.5);
 	})
 	.on("mouseout", (d, i) => {
+		d3.select(`.bar-${i}`).attr("opacity", (d) => 1);
 		hideTooltip();
-		d3.select(`.bar-${i}`).attr("opacity", 1);
 	});
